@@ -3,13 +3,12 @@ package com.to;
 public class User {
 	private String username;
 	private String password;
-	private int id;
 	private String type;
 	private String email;
 	
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", id=" + id + ", type=" + type + ", email="
+		return "User [username=" + username + ", password=" + password + "type=" + type + ", email="
 				+ email + "]";
 	}
 	
@@ -27,13 +26,6 @@ public class User {
 	
 	public void setPassword( String password ) {
 		this.password = password;
-	}
-	public int getId () {
-		return id;
-	}
-	
-	public void setId ( int userId ) {
-		this.id = userId;
 	}
 	
 	public String getType() {
