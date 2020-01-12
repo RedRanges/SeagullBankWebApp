@@ -1,0 +1,45 @@
+#navbarSeagull {
+    width : 40px;
+}
+
+a {
+    color : #222;
+}
+
+body {
+    background-color : #e5e5e5;
+    background-color: dodgerblue;
+}
+
+.logout-btn {
+    background: dodgerblue;
+    color : whitesmoke;
+}
+
+.logout-btn > a {
+    color : whitesmoke;
+}
+
+.accounts-nav {
+    height : 90vh;
+}
+
+#my-svg {
+    background-color: ghostwhite;
+    width : 100%;
+    height : 410px;
+}
+
+table {
+    background-color: ghostwhite; 
+}
+
+.card {
+    background-color: ghostwhite;
+}
+
+.svg-container {
+    background-color: ghostwhite;
+    height : 50vh;
+    margin-left: 10px;
+}
