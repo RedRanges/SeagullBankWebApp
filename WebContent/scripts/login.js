@@ -7,10 +7,8 @@ function validateUsername() {
     let username = document.getElementById( 'inputUsername' ).value;
     if ( username != '' ) {
         if ( /^(?=.*[a-zA-z])[a-zA-Z0-9]{5,20}$/.test( username ) ){
-        	console.log( 'true' );
             return true;
         } else {
-        	console.log( 'ffff' );
             return false;
             
         }
@@ -25,10 +23,8 @@ function validatePassword() {
     let password = document.getElementById( 'inputPassword' ).value;
     if ( password !== '' ) {
         if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/.test( password ) ) {
-        	console.log( 'true' );
             return true;
         } else {
-        	console.log( 'ffff' );
         	return false;
         }   
     }
@@ -52,7 +48,6 @@ function submitLogin() {
 				  if (this.readyState == 4) {
 				    if (this.status == 200) {
 				      console.log( loginXhr.response );
-				      console.log( document.cookie );
 				      window.location.href = ( 'account.html' )
 				  } else {
 					  console.log( 'not a sucess' );

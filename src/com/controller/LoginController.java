@@ -2,20 +2,13 @@ package com.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.bo.UserBO;
 import com.bo.impl.UserBOImpl;
@@ -50,8 +43,8 @@ public class LoginController extends HttpServlet {
 		try {
 			if( bo.isValidUser( user ) ) {
 				out.print(gson.toJson( user ) );
-				Cookie cookie = new Cookie( "username", user.getUsername() );
-				response.addCookie( cookie );
+		        HttpSession session=request.getSession();  
+		        session.setAttribute( "username", user.getUsername() );
 				response.setStatus( 200 );
 			} else {
 				response.setStatus( 404 );
@@ -60,9 +53,6 @@ public class LoginController extends HttpServlet {
 		} catch( Exception e ) {
 			response.setStatus( 404 );
 		}
-
-		
-		
 	}
     
 

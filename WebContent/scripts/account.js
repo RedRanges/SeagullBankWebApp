@@ -1,3 +1,20 @@
+window.onload = function() {
+	let sessionXHR = new XMLHttpRequest;
+	console.log( 'help' );
+	sessionXHR.open( "GET", 'http://localhost:5678/SeagullBankWebApp/account', true );
+	sessionXHR.onload = function () {
+		console.log( this.readyState );
+	  if (this.readyState == 4) {
+		  
+	    if (this.status == 200) {
+	      console.log( loginXhr.response );
+	    } else {
+		  window.location.href = ( 'http://localhost:5678/SeagullBankWebApp/login.html' );
+		  }
+		}
+	}
+};
+
 function getRandomInt(max) {
     return Math.floor(
         Math.random() * Math.floor(max));
@@ -14,10 +31,6 @@ let checkedBalance = 5000.23;
 
 const accountHistory = [];
 const balanceHistory = [];
-
-window.onload = () => {
-	console.log( document.cookie );
-}
 
 
 class Transaction {
