@@ -26,7 +26,6 @@ public class UserDAOImpl implements UserDAO {
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setString(1, user.getUsername());
 			preparedStatement.setString(2, user.getPassword());
-			System.out.println( user );
 			ResultSet resultSet=preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				b=true;
@@ -37,6 +36,26 @@ public class UserDAOImpl implements UserDAO {
 			throw new BusinessException("Server encountered internal error.. Please contact support....");
 		}
 		return b;
+	}
+
+	@Override
+	public int addUser(User user) throws BusinessException {
+		int i = 0;
+		try(Connection connection=OracleConnection.getConnection()){
+			String sql = "insert into users (username, email, password, type) values (?,?,?,?)";
+			PreparedStatement preparedStatement = connection.prepareStatement( sql );
+			preparedStatement.setString( 1, user.getUsername() );
+			preparedStatement.setString( 2, user.getEmail() );
+			preparedStatement.setString( 3, user.getPassword() );
+			preparedStatement.setString( 4, user.getType() );
+			
+			i = preparedStatement.executeUpdate();
+			
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("Server encountered internal error.. Please contact support....");
+		}
+		return i;
 	}
 	
 }

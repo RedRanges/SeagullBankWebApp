@@ -40,18 +40,17 @@ public class AccountController extends HttpServlet {
 			 if ( session != null ) {
 			 String username = ( String )session.getAttribute( "username" );
 			 out.print( "hello " + username );
+			
 			 response.setStatus( 200 );
 			 } else {
 				 response.setStatus( 403 );
-				 return;
 			 }
-	
+			 
+			 
 		} catch ( Exception e ) {
 			System.out.println( e );
 		}
 		
 	}
-
-	
 
 }

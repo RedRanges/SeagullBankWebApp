@@ -18,5 +18,17 @@ public class UserBOImpl implements UserBO{
 		}
 		return b;
 	}
+
+	@Override
+	public int addUser(User user) throws BusinessException {
+		int i = 0;
+		if( user != null && ( user.getUsername()+"").matches( "^(?=.*[a-zA-z])[a-zA-Z0-9]{5,20}$" ) && user.getPassword().matches( "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,15}$" ) ){
+			//call DAO
+			i=new UserDAOImpl().addUser( user );
+		}else {
+			throw new BusinessException("Invalid Login Credentials");
+		}
+		return i;
+	}
 }
 

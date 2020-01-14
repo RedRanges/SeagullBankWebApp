@@ -1,19 +1,68 @@
 window.onload = function() {
 	let sessionXHR = new XMLHttpRequest;
-	console.log( 'help' );
 	sessionXHR.open( "GET", 'http://localhost:5678/SeagullBankWebApp/account', true );
 	sessionXHR.onload = function () {
-		console.log( this.readyState );
 	  if (this.readyState == 4) {
-		  
 	    if (this.status == 200) {
-	      console.log( loginXhr.response );
+	      getAccountData();
 	    } else {
 		  window.location.href = ( 'http://localhost:5678/SeagullBankWebApp/login.html' );
 		  }
 		}
 	}
+	sessionXHR.send(); 
 };
+
+let logoutButton = document.getElementById( 'logoutButton' );
+logoutButton.addEventListener( 'click',  function () {
+	let logoutXhr = new XMLHttpRequest;
+	logoutXhr.open( 'GET', 'http://localhost:5678/SeagullBankWebApp/logout', true );
+	logoutXhr.onload = function () {
+		if ( this.readyState == 4 ) {
+			if ( this.status === 200 ) {
+				window.location.href = logoutXhr.response + '.html';
+			} else {
+				window.location.href = 'login.html';
+			}
+		}
+	}
+	logoutXhr.send(); 
+} );
+
+function getAccountData() {
+	let accountXhr = new XMLHttpRequest;
+	accountXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/account_number', true );
+	accountXhr.onload = function () {
+		if ( this.readyState == 4 ) {
+			if ( this.status === 200 ) {
+				let response = accountXhr.response;
+				
+				response = response.slice( 1, response.length-1 );
+				
+				let arr = response.split( '},' );
+				
+				let tempString = arr.join( '}!' );
+				arr = tempString.split( '!' );
+				
+
+				let accountList = document.getElementById( 'nav-account-list' );
+				
+				arr.forEach( element => { 
+					let account = JSON.parse( element );
+					console.log( account );
+					accountList.innerHTML += `<li class='nav-item'><a class="nav-link" href="#"><div class="card"><div class="card-body">
+					<h5 class="card-title">${account.type} Account : ${ account.accountNumber }</h5><p class="card-text">
+					Balance : $${account.balance}</p> </div> </div></a></li>`;
+				} );
+
+			} else {
+				console.log( 'oopsie' );
+			}
+		}
+	}
+	accountXhr.send();
+	
+}
 
 function getRandomInt(max) {
     return Math.floor(
@@ -94,8 +143,6 @@ let balanceMax = Math.max( ...balanceHistory );
 
 let scaledArray = balanceHistory.scaleBetween( 0, 400 );
 
-// console.log( balanceHistory );
-// console.log( sortedAccountHisory);
 
 let svg = document.getElementById("my-svg");
 let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
@@ -127,3 +174,6 @@ scaledArray.forEach( ( element ) => {
 } );
 
 polyline.setAttributeNS( null, "points", points );
+
+
+

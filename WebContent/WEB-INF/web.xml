@@ -24,4 +24,34 @@
     <servlet-name>LoginController</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+    <servlet>  
+    <description></description>  
+    <display-name>LogoutController</display-name>  
+    <servlet-name>LogoutController</servlet-name>  
+    <servlet-class>com.controller.LogoutController</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>LogoutController</servlet-name>  
+    <url-pattern>/logout</url-pattern>  
+  </servlet-mapping>
+ 	<servlet>  
+    <description></description>  
+    <display-name>AccountNumberController</display-name>  
+    <servlet-name>AccountNumberController</servlet-name>  
+    <servlet-class>com.controller.AccountNumberController</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>AccountNumberController</servlet-name>  
+    <url-pattern>/account_number</url-pattern>  
+  </servlet-mapping>
+   	<servlet>  
+    <description></description>  
+    <display-name>CreateAccountController</display-name>  
+    <servlet-name>CreateAccountController</servlet-name>  
+    <servlet-class>com.controller.CreateAccountController</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>CreateAccountController</servlet-name>  
+    <url-pattern>/create_account</url-pattern>  
+  </servlet-mapping>      
 </web-app>

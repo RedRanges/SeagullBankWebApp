@@ -34,8 +34,8 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType( "application/json" );
+		response.setCharacterEncoding( "UTF-8" );
 		Gson gson=new Gson();
 		User user=gson.fromJson(request.getReader(), User.class);
 		UserBO bo=new UserBOImpl();
@@ -44,10 +44,13 @@ public class LoginController extends HttpServlet {
 			if( bo.isValidUser( user ) ) {
 				out.print(gson.toJson( user ) );
 		        HttpSession session=request.getSession();  
+		        session.setMaxInactiveInterval( 1200 );
 		        session.setAttribute( "username", user.getUsername() );
-				response.setStatus( 200 );
+
+		        response.setStatus( 200 );
 			} else {
-				response.setStatus( 404 );
+
+				response.setStatus( 403 );
 			}
 			
 		} catch( Exception e ) {
