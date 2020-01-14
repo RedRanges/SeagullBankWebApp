@@ -35,13 +35,35 @@
             <div id="nav-account-list">
           	</div>
           	</ul>
-  
         </div>
       </nav>
-      <div class="col-8 text-center svg-container">
-        <h3>Account History</h3>
-        <svg id="my-svg">
-        </svg>
+		<div class="col-8">
+        <div class ="row">
+          <div class="col-12  svg-container text-center">
+        <h3>Account History : <span id="selected-account">10000008</span> </h3>
+          <svg id="my-svg">
+          </svg>
+      </div>
+      </div>
+        <div class="row">
+          <div class="col-12 options-container mt-3 py-2">
+            <button class="btn apply-btn">Apply for an account</button>
+            <button class="btn deposit-btn">Deposit</button>
+            <button class="btn withdraw-btn">Withdraw</button>
+            <button class="btn transfer-btn">Transfer</button>
+          </div>
+        </div>
+      </div>
+      <div class = "col-1">
+	      <div id="account-history-controls">
+	        <button class="btn time-btn btn-block">30 days</button>
+	        <button class="btn time-btn btn-block">6 months</button>
+	        <button class="btn time-btn btn-block">1 year</button>
+	        <button class="btn time-btn btn-block">All</button>
+	        <hr>
+	        <button class="btn time-btn btn-block">line</button>
+	        <button class="btn time-btn btn-block">table</button>
+	      </div>
       </div>
     </div>
   </div>
@@ -51,5 +73,4 @@
 
   <script type="text/javascript" src="scripts/account.js"></script>
 </body>
-
 </html>

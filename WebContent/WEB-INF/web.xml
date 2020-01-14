@@ -53,5 +53,26 @@
   <servlet-mapping>  
     <servlet-name>CreateAccountController</servlet-name>  
     <url-pattern>/create_account</url-pattern>  
+  </servlet-mapping>
+     	<servlet>  
+    <description></description>  
+    <display-name>TransactionController</display-name>  
+    <servlet-name>TransactionController</servlet-name>  
+    <servlet-class>com.controller.TransactionController</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>TransactionController</servlet-name>  
+    <url-pattern>/add_transaction</url-pattern>  
+  </servlet-mapping>
+         	<servlet>  
+    <description></description>  
+    <display-name>SelectAccountController</display-name>  
+    <servlet-name>SelectAccountController</servlet-name>  
+    <servlet-class>com.controller.SelectAccountController</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>SelectAccountController</servlet-name>  
+    <url-pattern>/select_account</url-pattern>
   </servlet-mapping>      
+
 </web-app>

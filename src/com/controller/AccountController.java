@@ -38,10 +38,8 @@ public class AccountController extends HttpServlet {
 			
 			 HttpSession session=request.getSession( false ); 
 			 if ( session != null ) {
-			 String username = ( String )session.getAttribute( "username" );
-			 out.print( "hello " + username );
-			
-			 response.setStatus( 200 );
+				 String username = ( String )session.getAttribute( "username" );
+				 response.setStatus( 200 );
 			 } else {
 				 response.setStatus( 403 );
 			 }

@@ -13,7 +13,7 @@ public class Transaction {
 	@Override
 	public String toString() {
 		return "Transaction [accountNumber=" + accountNumber + ", type=" + type + ", amount=" + amount + ", dt=" + dt
-				+ ", username=" + username + "]";
+				+ ", username=" + username + ", balance=" + balance + "]";
 	}
 	public int getAccountNumber() {
 		return accountNumber;

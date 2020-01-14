@@ -30,10 +30,6 @@ body {
     height : 410px;
 }
 
-table {
-    background-color: ghostwhite; 
-}
-
 .card {
     background-color: ghostwhite;
 }
@@ -42,4 +38,38 @@ table {
     background-color: ghostwhite;
     height : 50vh;
     margin-left: 10px;
+}
+
+#account-history-controls {
+    background-color : ghostwhite;
+    height : 50vh;
+    margin-left : 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.options-container {
+    background-color: ghostwhite;
+    margin-left: 10px;
+}
+
+.withdraw-btn {
+    background-color :#e5e5e5;
+}
+
+.deposit-btn {
+    background-color : #e5e5e5;
+}
+
+.apply-btn {
+    background-color : #e5e5e5;
+}
+
+.transfer-btn {
+    background-color : #e5e5e5;
+}
+
+.time-btn {
+    background-color: #e5e5e5;
 }

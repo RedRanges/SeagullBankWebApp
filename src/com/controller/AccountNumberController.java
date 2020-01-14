@@ -43,21 +43,24 @@ public class AccountNumberController extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		
 		HttpSession session = request.getSession( false ); 
-		System.out.println( session.getAttribute( "username" ) );
 		AccountBO bo = new AccountBOImpl();
 		String username = (String) session.getAttribute( "username" );
-			
+		
 		ArrayList <Account> accountList = new ArrayList();
+		
 		try {
 			accountList = bo.getAccountsByUsername( username );
+			// need try catch probably because not everyone will have an account list
+			int defaultSelectedAccount = accountList.get( 0 ).getAccountNumber();
+			session.setAttribute( "selectedAccount",  defaultSelectedAccount );
 		} catch (BusinessException e) {
 			System.out.println( e.getMessage() );
 		}
-		System.out.println( "test" );
-		System.out.println( accountList );
-		for ( Account a : accountList ) {
-			System.out.println( a );
-		}
+		
+		
+//		for ( Account a : accountList ) {
+//			System.out.println( a );
+//		}
 		Gson gson = new Gson();
 		
 		
