@@ -6,13 +6,13 @@ public class Transaction {
 	private int accountNumber;
 	private String type;
 	private double amount;
-	private String dt;
+	private String dateTime;
 	private String username;
 	private double balance;
 	
 	@Override
 	public String toString() {
-		return "Transaction [accountNumber=" + accountNumber + ", type=" + type + ", amount=" + amount + ", dt=" + dt
+		return "Transaction [accountNumber=" + accountNumber + ", type=" + type + ", amount=" + amount + ", dt=" + dateTime
 				+ ", username=" + username + ", balance=" + balance + "]";
 	}
 	public int getAccountNumber() {
@@ -33,12 +33,7 @@ public class Transaction {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public String getDt() {
-		return dt;
-	}
-	public void setDt(String dt) {
-		this.dt = dt;
-	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -50,6 +45,12 @@ public class Transaction {
 	}
 	public void setBalance(double balance) {
 		this.balance = balance;
+	}
+	public String getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 	
 	

@@ -17,13 +17,13 @@ public class TransactionDAOImpl implements TransactionDAO{
 		int i = 0;
 		
 		try( Connection connection=OracleConnection.getConnection() ) {
-			String sql = "insert into transactions ( accountnumber, type, amount, dt, username, balance ) values(?,?,?,?,?,?)";
+			String sql = "insert into transactions ( accountnumber, type, amount, datetime, username, balance ) values(?,?,?,?,?,?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 			preparedStatement.setInt( 1, transaction.getAccountNumber() );
 			preparedStatement.setString( 2, transaction.getType() );
 			preparedStatement.setDouble( 3, transaction.getAmount() );
-			preparedStatement.setString( 4, transaction.getDt() );
+			preparedStatement.setString( 4, transaction.getDateTime() );
 			preparedStatement.setString( 5, transaction.getUsername() );
 			preparedStatement.setDouble( 6,  transaction.getBalance() );
 			
@@ -42,7 +42,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 	public ArrayList<Transaction> getTransactions() throws BusinessException {
 		ArrayList < Transaction > transactionList= new ArrayList();
 		try( Connection connection=OracleConnection.getConnection() ) {
-			String sql = "select accountnumber, type, amount, dt, username, balance from transactions";
+			String sql = "select accountnumber, type, amount, datetime, username, balance from transactions";
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -52,7 +52,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 				transaction.setBalance( resultSet.getDouble(  "balance" ) );
 				transaction.setAccountNumber( resultSet.getInt( "accountnumber" ) );
 				transaction.setAmount( resultSet.getDouble( "amount" ) );
-				transaction.setDt( resultSet.getString( "dt" ) );
+				transaction.setDateTime( resultSet.getString( "datetime" ) );
 				transaction.setUsername( resultSet.getString( "username" ) );
 				
 				transactionList.add( transaction );
@@ -72,7 +72,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 	public ArrayList<Transaction> getTransactionsByAccountNumber( int accountNumber ) throws BusinessException {
 		ArrayList < Transaction > transactionList= new ArrayList();
 		try( Connection connection=OracleConnection.getConnection() ) {
-			String sql = "select accountnumber, type, amount, dt, username, balance from transactions where accountnumber=?";
+			String sql = "select accountnumber, type, amount, datetime, username, balance from transactions where accountnumber=?";
 			
 			
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
@@ -85,7 +85,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 				transaction.setBalance( resultSet.getDouble(  "balance" ) );
 				transaction.setAccountNumber( resultSet.getInt( "accountnumber" ) );
 				transaction.setAmount( resultSet.getDouble( "amount" ) );
-				transaction.setDt( resultSet.getString( "dt" ) );
+				transaction.setDateTime( resultSet.getString( "datetime" ) );
 				transaction.setUsername( resultSet.getString( "username" ) );	
 				transactionList.add( transaction );
 			}
