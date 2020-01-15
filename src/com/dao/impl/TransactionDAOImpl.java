@@ -67,4 +67,38 @@ public class TransactionDAOImpl implements TransactionDAO{
 		
 		return transactionList;
 	}
+
+	@Override
+	public ArrayList<Transaction> getTransactionsByAccountNumber( int accountNumber ) throws BusinessException {
+		ArrayList < Transaction > transactionList= new ArrayList();
+		try( Connection connection=OracleConnection.getConnection() ) {
+			String sql = "select accountnumber, type, amount, dt, username, balance from transactions where accountnumber=?";
+			
+			
+			PreparedStatement preparedStatement = connection.prepareStatement( sql );
+			preparedStatement.setInt( 1, accountNumber  );
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while ( resultSet.next() ) {
+				Transaction transaction = new Transaction();
+				transaction.setType( resultSet.getString( "type" ) );
+				transaction.setBalance( resultSet.getDouble(  "balance" ) );
+				transaction.setAccountNumber( resultSet.getInt( "accountnumber" ) );
+				transaction.setAmount( resultSet.getDouble( "amount" ) );
+				transaction.setDt( resultSet.getString( "dt" ) );
+				transaction.setUsername( resultSet.getString( "username" ) );	
+				transactionList.add( transaction );
+			}
+			
+			
+		} catch (ClassNotFoundException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		} catch (SQLException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		}
+		
+		return transactionList;
+		
+		
+	}
 }

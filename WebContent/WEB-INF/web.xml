@@ -69,7 +69,7 @@
     <display-name>SelectAccountController</display-name>  
     <servlet-name>SelectAccountController</servlet-name>  
     <servlet-class>com.controller.SelectAccountController</servlet-class>  
-  </servlet>  
+  </servlet>
   <servlet-mapping>  
     <servlet-name>SelectAccountController</servlet-name>  
     <url-pattern>/select_account</url-pattern>

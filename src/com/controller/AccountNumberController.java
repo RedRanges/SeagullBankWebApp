@@ -38,6 +38,8 @@ public class AccountNumberController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO 
+		// need try catch when getting accountList index 0 because list could be empty
 		response.setContentType( "application/json" );
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
@@ -50,7 +52,6 @@ public class AccountNumberController extends HttpServlet {
 		
 		try {
 			accountList = bo.getAccountsByUsername( username );
-			// need try catch probably because not everyone will have an account list
 			int defaultSelectedAccount = accountList.get( 0 ).getAccountNumber();
 			session.setAttribute( "selectedAccount",  defaultSelectedAccount );
 		} catch (BusinessException e) {
