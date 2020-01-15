@@ -27,7 +27,7 @@ body {
 #my-svg {
     background-color: ghostwhite;
     width : 100%;
-    height : 410px;
+    height : 45vh;
 }
 
 .card {
@@ -54,22 +54,32 @@ body {
     margin-left: 10px;
 }
 
-.withdraw-btn {
-    background-color :#e5e5e5;
-}
-
-.deposit-btn {
-    background-color : #e5e5e5;
+#dynamic-form {
+	height : 20vh;
+	background-color : ghostwhite;
 }
 
 .apply-btn {
     background-color : #e5e5e5;
 }
 
-.transfer-btn {
+.transaction-btn {
     background-color : #e5e5e5;
 }
 
 .time-btn {
     background-color: #e5e5e5;
 }
+
+.form-container {
+	margin-left : 10px;
+	background-color : ghostwhite;
+}
+
+label {
+    text-align: right;
+    clear: both;
+    float:left;
+    margin-right:15px;
+}
+

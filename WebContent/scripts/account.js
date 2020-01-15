@@ -47,13 +47,14 @@ function getAccountData() {
 				
 				arr.forEach( element => { 
 					let account = JSON.parse( element );
-//					console.log( account );
+
 
 					accountList.innerHTML += `<li class='nav-item'><button id="selectableAccount" class="btn nav-link"><div class="card"><div class="card-body">
 						<h5 class="card-title">${account.type} Account : ${ account.accountNumber }</h5><p class="card-text">
 						Balance : $${account.balance}</p> </div> </div></button></li>`;
 					
 				} );
+				
 				let container = document.querySelectorAll("#selectableAccount");
 				container.forEach( element => {
 					element.addEventListener( 'click', function() {
@@ -70,6 +71,7 @@ function getAccountData() {
 							if ( this.readyState == 4 ) {
 								if ( this.status === 200 ) {
 									let response = selectedAccountXhr.response;
+									
 									response = response.slice( 1, response.length-1 );
 									let arr = response.split( '},' );
 									let tempString = arr.join( '}!' );
@@ -94,24 +96,22 @@ function getAccountData() {
 	accountXhr.send();
 
 }
-
+// TODO incorporate date on x axis and sort by date if not sorted already
+// views for 30 days 6 months 1 year all time
 function makeBalanceArray ( arr ) {
-//	console.log( arr );
-	let balanceHistory = arr.map( arr => { jArr = JSON.parse( arr ); return jArr.balance } );
-//	console.log( balanceArray );
+	let jsonArr = arr.map( e => JSON.parse( e ) );
+	console.log( jsonArr );
+	document.getElementById('selected-account').innerHTML = jsonArr[ 0 ].accountNumber;
+	let balanceHistory = jsonArr.map( e => {  return e.balance } );
 	let balanceMin = Math.min( ...balanceHistory );
 	let balanceMax = Math.max( ...balanceHistory );
 	console.log( balanceHistory );
 	let scaledArray = balanceHistory.scaleBetween( 400, 0 );
-	
+	console.log( scaledArray );
 
 	let svg = document.getElementById("my-svg");
 	let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
 
-//	if ( svg.contains( polyline ) ) {
-//		console.log( 'hello' );
-//	}
-	
 	if ( svg.hasChildNodes() ) {
         let child = svg.lastElementChild;  
         while (child) { 
@@ -119,7 +119,6 @@ function makeBalanceArray ( arr ) {
             child = svg.lastElementChild; 
         } 
 	}
-	
 	
 	polyline.style.fill = "none";
 	polyline.style.stroke = "seagreen";
@@ -166,105 +165,30 @@ function getRandomInt(max) {
     return this.map(num => (scaledMax-scaledMin)*(num-min)/(max-min)+scaledMin);
   }
 
-let balance = 5000.23;
-let checkedBalance = 5000.23;
-
-const accountHistory = [];
-const balanceHistory = [];
-
-
-class Transaction {
-    constructor () {
-        let d = new Date( Date.now() - getRandomInt( 9999999999 ) );
-        let month = d.getMonth() + 1;
-        let day = d.getDate();
-        let year = d.getFullYear();
-        let hour = d.getHours();
-        let minutes = d.getMinutes();
-        let seconds = d.getSeconds();
-        this.date = month + "/" + "/" + day + "/" + year + ' '+ hour+':'+minutes+':'+seconds + ' CST';
-        if ( d % 2 === 0 ) {
-            this.type = "withdraw";
-        } else {
-            this.type = "deposit"
-        }
-        this.amount = `$${getRandomInt(3000)}.${getRandomInt(99)}`;
-    }
-};
-
-for ( let i = 0; i < 50; i++ ) {
-    accountHistory.push( new Transaction() );
-};
-
-let sortedAccountHisory = accountHistory.sort( ( a, b ) => { 
-    return new Date ( a.date ) - new Date ( b.date  ) } );
-
-//sortedAccountHisory.forEach( ( element ) => {
-//    // console.log( checkedBalance );
-//    if ( element.type === 'withdraw' ) {
-//
-//        if ( checkedBalance - Number( element.amount.slice(1) ) < 0 ) {
-//            // console.log( 'not allowed' );
-//            sortedAccountHisory.splice( sortedAccountHisory.indexOf( element ), 1 );
-//        } else {
-//            checkedBalance -= Number( element.amount.slice(1) );
-//        }
-//    } else {
-//        checkedBalance +=  Number( element.amount.slice(1) );
-//    }
-//} );
+  let depositButton = document.getElementById( 'deposit-btn' );
+  depositButton.addEventListener( 'click', function() {
+	  console.log( "help")
+	  let depositSlip = document.getElementById( 'form-container' );
+		if ( depositSlip.hasChildNodes() ) {
+	        let child = depositSlip.lastElementChild;  
+	        while (child) { 
+	        	depositSlip.removeChild(child); 
+	            child = depositSlip	.lastElementChild; 
+	        } 
+		}
+		// make regex to test for format
+	  depositSlip.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
+		  <div> Deposit into account : ${document.getElementById('selected-account').innerHTML}</div>
+		  <label class="pt-2">Amount : </label>
+		  <input  class="form-control pt-2" id="deposit"  placeholder="Enter Amount">
+	  </div>`
+  } )
 
 
-//sortedAccountHisory.forEach( element => {
-//    if ( element.type === 'withdraw' ) {
-//        balance -= Number( element.amount.slice( 1 ) ); 
-//        element.balance = balance;
-//       
-//    } else {
-//        balance += Number( element.amount.slice( 1 ) );
-//        element.balance = balance;
-//    }
-//    balanceHistory.push( balance );
-//});
+//let sortedAccountHisory = accountHistory.sort( ( a, b ) => { 
+//    return new Date ( a.date ) - new Date ( b.date  ) } );
 
-//balanceHistory.unshift( 5000.23 );
 
-//let balanceMin = Math.min( ...balanceHistory );
-//let balanceMax = Math.max( ...balanceHistory );
-
-//let scaledArray = balanceHistory.scaleBetween( 0, 400 );
-//
-//
-//let svg = document.getElementById("my-svg");
-//let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-//polyline.style.fill = "none";
-//polyline.style.stroke = "seagreen";
-//polyline.style.strokeWidth = "2px";
-//svg.appendChild(polyline);
-//let points = '';
-
-//let maxNumber = document.createElementNS( 'http://www.w3.org/2000/svg', 'text');
-//maxNumber.setAttributeNS(null,"x", 0 );     
-//maxNumber.setAttributeNS(null,"y", 10 ); 
-//maxNumber.setAttributeNS(null,"font-size","12");
-//maxNumber.innerHTML = balanceMax;
-//svg.appendChild( maxNumber );
-//
-//
-//let minNumber = document.createElementNS( 'http://www.w3.org/2000/svg', 'text');
-//minNumber.setAttributeNS(null,"x", 0 );     
-//minNumber.setAttributeNS(null,"y", 400 ); 
-//minNumber.setAttributeNS(null,"font-size","12");
-//minNumber.innerHTML = balanceMin;
-//svg.appendChild( minNumber );
-//let x  = 50;
-//
-//scaledArray.forEach( ( element ) => {
-//   points += `${ x }, ${ element + 10 } `;
-//   x += 20;
-//} );
-//
-//polyline.setAttributeNS( null, "points", points );
 
 
 
