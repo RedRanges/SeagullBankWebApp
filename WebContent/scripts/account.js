@@ -55,15 +55,13 @@ function makeBalanceArray ( arr ) {
 	
 };
 
-
 function parseResponseToJsonArray ( res ) {
 		let response = res.slice( 1, res.length-1 );
 		let arr = response.split( '},' );
 		let tempString = arr.join( '}!' );
 		arr = tempString.split( '!' );
 		let jsonArr = arr.map( e => JSON.parse( e ) );
-		return jsonArr;
-	
+		return jsonArr;	
 }
  
 
@@ -181,7 +179,7 @@ function getAccountData() {
 }
 
 
-  // ####### DEPOSITS #######
+// ####### DEPOSITS #######
   let depositButton = document.getElementById( 'deposit-btn' );
   depositButton.addEventListener( 'click', function() {
 	  let formContainer = document.getElementById( 'form-container' );
@@ -276,6 +274,102 @@ function getAccountData() {
   	} 
   	
   );
+  
+  // ####### MAKETRANSFER #######
+  let makeTransferButton = document.getElementById( 'make-transfer-btn' );
+  makeTransferButton.addEventListener( 'click', function() {
+	  let formContainer = document.getElementById( 'form-container' );
+	  destroyNodeChildren( formContainer );
+	  // make regex to test for format
+	  formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
+						  		  <div mt-3 id="form-header"> Make transfer from account : ${document.getElementById('selected-account').innerHTML}</div>
+						  		  <table border="0" style="width: 100%;">
+								  <tr class="mt-3">
+								  <td class="transfer-input-row mt-3 mr-3"><span>to account:</span></td>
+								  <td class="transfer-input-row mt-3"><input id="transfer-input-account" class="form-control pt-2" placeholder="Enter Account Number"></td>
+								  </tr>
+  								  <tr class="mt-3">
+								  <td class="transfer-input-row mt-3 mr-3"><span>amount:</span></td>
+								  <td class="transfer-input-row mt-3"><input id="transfer-input-amount" class="form-control pt-2" placeholder="Enter Amount"></td>
+								  </tr>
+								  </table>
+								  <div id="transfer-feedback"><br></div>
+								  <button id="submit-btn" class="btn transaction-btn">Send Transfer</button>	
+								  </div>`
+	
+		  
+	
+	  let submitButton = document.getElementById( 'submit-btn' );
+  	  submitButton.addEventListener( 'click', function () {
+  		  let submitTransferXhr = new XMLHttpRequest;
+  		  
+  		  let transferSubmission = { 'accountFrom' : document.getElementById( 'selected-account' ).innerHTML, 
+  				  					  'accountTo' : document.getElementById( 'transfer-input-account' ).value,
+  				  					 'amount' : document.getElementById( 'transfer-input-amount' ).value,
+  				  					 'dateTime' : new Date() };
+  		  console.log( transferSubmission );
+  		  transferSubmission = JSON.stringify( transferSubmission );
+  		  submitTransferXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/make_transfer', true );
+  		  submitTransferXhr.onload = function () {
+			if ( this.readyState == 4 ) {
+				if ( this.status === 200 ) {
+					let response = submitTransferXhr.response;
+					console.log( 'response : ', response );
+					updateLineGraph();
+					destroyNodeChildren( formContainer );
+				}
+			} else {
+				console.log( 'couldn\'t make transfer' );
+			}
+			
+  		  }
+  		submitTransferXhr.send( transferSubmission );
+  	  } );
+  } );
+  
+  // ####### VIEW INCOMING TRANSFERS #######
+  let viewTransferButton = document.getElementById( 'view-transfer-btn' );
+  viewTransferButton.addEventListener( 'click', function() {
+	  let formContainer = document.getElementById( 'form-container' );
+	  destroyNodeChildren( formContainer );
+
+	  // make regex to test for format
+	    formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
+							  		<div mt-3 id="form-header"> Incoming Pending Transfers : ${document.getElementById('selected-account').innerHTML}</div>
+	    							<div id="pending-transfer-feedback" class="text-center mt-5"></div>
+									</div>`
+//  		<table id="pending-transfers-table" border="0" style="width: 100%;">						  	
+//		</table>	
+  		let getAllAccountNumberTransfersXhr = new XMLHttpRequest;
+		  
+	    let accountSubmission = { 'accountNumber' : document.getElementById( 'selected-account' ).innerHTML };
+			  		
+		console.log( accountSubmission );
+		accountSubmission = JSON.stringify( accountSubmission );
+		getAllAccountNumberTransfersXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/all_account_transfers', true );
+		getAllAccountNumberTransfersXhr.onload = function () {
+			if ( this.readyState == 4 ) {
+				if ( this.status === 200 ) {
+					let response = getAllAccountNumberTransfersXhr.response;
+//					console.log( 'response : ', response );
+					if ( response.length  > 2 ) {
+						
+					} else {
+						let pendingTransferFeedback = document.getElementById( 'pending-transfer-feedback' );
+						pendingTransferFeedback.innerHTML = "No pending transfers";
+					}
+					
+
+				}
+			} else {
+				console.log( 'couldn\'t make transfer' );
+			}
+		
+		}
+		getAllAccountNumberTransfersXhr.send( accountSubmission );
+	
+  } );
+  
   
   
   // ####### DOM UPDATE #######

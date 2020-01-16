@@ -67,13 +67,14 @@ public class TransferDAOImpl implements TransferDAO{
 	public ArrayList<Transfer> getAllTransfersByAccountNumber(Account account) throws BusinessException {
 		ArrayList < Transfer > transferList = new ArrayList();
 		try( Connection connection=OracleConnection.getConnection() ) {
-			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where accountfrom=? or accountto=?";
+//			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where accountfrom=? or accountto=?";
+			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where accountto=?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 
 
 			preparedStatement.setInt( 1, account.getAccountNumber() );
-			preparedStatement.setInt( 2, account.getAccountNumber() );
+//			preparedStatement.setInt( 2, account.getAccountNumber() );
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while ( resultSet.next() ) {

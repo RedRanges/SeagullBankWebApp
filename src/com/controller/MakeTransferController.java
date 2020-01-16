@@ -52,6 +52,7 @@ public class MakeTransferController extends HttpServlet {
 			response.setStatus( 200 );
 			} catch ( BusinessException e ) {
 				// what to do here?
+				System.out.println( e.getMessage() );
 				response.setStatus( 404 );
 			}
 		}

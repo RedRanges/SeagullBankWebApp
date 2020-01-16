@@ -51,11 +51,13 @@ public class SelectAccountController extends HttpServlet {
 
 		PrintWriter out=response.getWriter();
 		TransactionBO transactionBO = new TransactionBOImpl();
+		Gson gson = new Gson();
 		HttpSession session = request.getSession( false );
 		ArrayList < Transaction > transactionList = new ArrayList();
-		Gson gson = new Gson();
+		Account account = gson.fromJson(request.getReader(), Account.class);
 		if ( session != null ) {
-			Account account =gson.fromJson(request.getReader(), Account.class);
+			session.setAttribute( "selectedAccount", account.getAccountNumber() );
+			
 			try {
 			transactionList = transactionBO.getTransactionsByAccountNumber( account.getAccountNumber() );
 			gson = new Gson();
