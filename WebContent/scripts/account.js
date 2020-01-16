@@ -275,7 +275,7 @@ function getAccountData() {
   	
   );
   
-  // ####### MAKETRANSFER #######
+  // ####### MAKE TRANSFER #######
   let makeTransferButton = document.getElementById( 'make-transfer-btn' );
   makeTransferButton.addEventListener( 'click', function() {
 	  let formContainer = document.getElementById( 'form-container' );
@@ -307,7 +307,7 @@ function getAccountData() {
   				  					  'accountTo' : document.getElementById( 'transfer-input-account' ).value,
   				  					 'amount' : document.getElementById( 'transfer-input-amount' ).value,
   				  					 'dateTime' : new Date() };
-  		  console.log( transferSubmission );
+//  		  console.log( transferSubmission );
   		  transferSubmission = JSON.stringify( transferSubmission );
   		  submitTransferXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/make_transfer', true );
   		  submitTransferXhr.onload = function () {
@@ -333,26 +333,44 @@ function getAccountData() {
 	  let formContainer = document.getElementById( 'form-container' );
 	  destroyNodeChildren( formContainer );
 
-	  // make regex to test for format
-	    formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
-							  		<div mt-3 id="form-header"> Incoming Pending Transfers : ${document.getElementById('selected-account').innerHTML}</div>
-	    							<div id="pending-transfer-feedback" class="text-center mt-5"></div>
-									</div>`
-//  		<table id="pending-transfers-table" border="0" style="width: 100%;">						  	
-//		</table>	
+    formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
+						  		<div mt-3 id="form-header"> Incoming Pending Transfers : ${document.getElementById('selected-account').innerHTML}</div>
+    							<table id="pending-transfer-table" class="table scrollbar overflow-auto"></table>
+    							<div id="pending-transfer-feedback" class="text-center mt-5"></div>
+								</div>`
+
   		let getAllAccountNumberTransfersXhr = new XMLHttpRequest;
 		  
 	    let accountSubmission = { 'accountNumber' : document.getElementById( 'selected-account' ).innerHTML };
 			  		
-		console.log( accountSubmission );
+//		console.log( accountSubmission );
 		accountSubmission = JSON.stringify( accountSubmission );
 		getAllAccountNumberTransfersXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/all_account_transfers', true );
 		getAllAccountNumberTransfersXhr.onload = function () {
 			if ( this.readyState == 4 ) {
 				if ( this.status === 200 ) {
 					let response = getAllAccountNumberTransfersXhr.response;
-//					console.log( 'response : ', response );
 					if ( response.length  > 2 ) {
+//						console.log( response );
+						let pendingTransferArray = parseResponseToJsonArray( response );
+						let pendingTransferTable = document.getElementById( 'pending-transfer-table' );
+						pendingTransferTable.innerHTML += 
+						`<thead class="mt-3">
+						<tr>
+						<th>ID</th><th>From</th><th>Date</th><th>Amount</th><th>Status</th>
+						</tr>
+						</thead>`;
+						pendingTransferArray.forEach( ( element ) => {
+							console.log( element );
+							pendingTransferTable.innerHTML += 
+							`
+							<tr>
+							    <td>${element.id}</td><td>${element.accountFrom}</td>
+							    <td>${element.dateTime}</td><td>$${element.amount}</td>
+							    <td>${element.status}</td>
+							 </tr>
+							`;
+						} );
 						
 					} else {
 						let pendingTransferFeedback = document.getElementById( 'pending-transfer-feedback' );

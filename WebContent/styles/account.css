@@ -55,7 +55,7 @@ body {
 }
 
 #dynamic-form {
-	height : 25vh;
+	height : 30vh;
 	background-color : ghostwhite;
 }
 
@@ -81,13 +81,6 @@ body {
 	background-color : #e5e5e5;
 }
 
-/* label {
-    text-align: right;
-    clear: both;
-    float:left;
-    margin-right:15px;
-} */
-
 #form-header {
 	margin-top : 10px;
 	font-weight : 500;
@@ -95,5 +88,15 @@ body {
 
 .transfer-input-row {
 	display : inline-block;
+}
+
+#pending-transfer-table {
+	width : 100%;
+	margin : 0 auto;
+	text-align : center;
+}
+
+th {
+	padding-top : 2%;
 }
 
