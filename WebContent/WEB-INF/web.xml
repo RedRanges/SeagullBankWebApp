@@ -64,7 +64,7 @@
     <servlet-name>TransactionController</servlet-name>  
     <url-pattern>/add_transaction</url-pattern>  
   </servlet-mapping>
-         	<servlet>  
+  <servlet>  
     <description></description>  
     <display-name>SelectAccountController</display-name>  
     <servlet-name>SelectAccountController</servlet-name>  
@@ -73,6 +73,36 @@
   <servlet-mapping>  
     <servlet-name>SelectAccountController</servlet-name>  
     <url-pattern>/select_account</url-pattern>
+  </servlet-mapping>   
+    <servlet>  
+    <description></description>  
+    <display-name>MakeTransferController</display-name>  
+    <servlet-name>MakeTransferController</servlet-name>  
+    <servlet-class>com.controller.MakeTransferController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>MakeTransferController</servlet-name>  
+    <url-pattern>/make_transfer</url-pattern>
+  </servlet-mapping>  
+      <servlet>  
+    <description></description>  
+    <display-name>ResponseTransferController</display-name>  
+    <servlet-name>ResponseTransferController</servlet-name>  
+    <servlet-class>com.controller.ResponseTransferController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>ResponseTransferController</servlet-name>  
+    <url-pattern>/response_transfer</url-pattern>
   </servlet-mapping>      
+        <servlet>  
+    <description></description>  
+    <display-name>AllAccountTransfersController</display-name>  
+    <servlet-name>AllAccountTransfersController</servlet-name>  
+    <servlet-class>com.controller.AllAccountTransfersController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>AllAccountTransfersController</servlet-name>  
+    <url-pattern>/all_account_transfers</url-pattern>
+  </servlet-mapping>         
 
 </web-app>
