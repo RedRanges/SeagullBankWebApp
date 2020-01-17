@@ -123,6 +123,48 @@
   <servlet-mapping>  
     <servlet-name>RegisterUserController</servlet-name>  
     <url-pattern>/register_user</url-pattern>
-  </servlet-mapping>          
+  </servlet-mapping>
+              <servlet>  
+    <description></description>  
+    <display-name>EmployeeAccountController</display-name>  
+    <servlet-name>EmployeeAccountController</servlet-name>  
+    <servlet-class>com.controller.EmployeeAccountController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>EmployeeAccountController</servlet-name>  
+    <url-pattern>/admin_account</url-pattern>
+  </servlet-mapping> 
+                <servlet>  
+    <description></description>  
+    <display-name>EmployeeTransferController</display-name>  
+    <servlet-name>EmployeeTransferController</servlet-name>  
+    <servlet-class>com.controller.EmployeeTransferController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>EmployeeTransferController</servlet-name>  
+    <url-pattern>/get_transfers</url-pattern>
+  </servlet-mapping>     
+       <servlet>  
+    <description></description>  
+    <display-name>EmployeeTransactionController</display-name>  
+    <servlet-name>EmployeeTransactionController</servlet-name>  
+    <servlet-class>com.controller.EmployeeTransactionController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>EmployeeTransactionController</servlet-name>  
+    <url-pattern>/get_transactions</url-pattern>
+  </servlet-mapping>   
+         <servlet>  
+    <description></description>  
+    <display-name>EmployeePendingController </display-name>  
+    <servlet-name>EmployeePendingController </servlet-name>  
+    <servlet-class>com.controller.EmployeePendingController </servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>EmployeePendingController </servlet-name>  
+    <url-pattern>/get_pending</url-pattern>
+  </servlet-mapping>  
+  
+               
 
 </web-app>

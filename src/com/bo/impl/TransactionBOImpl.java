@@ -33,4 +33,12 @@ public class TransactionBOImpl implements TransactionBO {
 		return transactionList;
 	}
 
+	@Override
+	public ArrayList<Transaction> getAllTransfers() throws BusinessException {
+		ArrayList < Transaction > transactionList = new ArrayList();
+		// business logic
+		transactionList = new TransactionDAOImpl().getTransactions();
+		return transactionList;
+	}
+
 }

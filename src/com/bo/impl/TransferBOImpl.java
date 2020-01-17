@@ -45,5 +45,12 @@ public class TransferBOImpl implements TransferBO {
 		
 		return transfer;
 	}
+
+	@Override
+	public ArrayList<Transfer> getAllTransfers() throws BusinessException {
+		ArrayList < Transfer > transferList = null;
+		transferList = new TransferDAOImpl().getAllTransfers();
+		return transferList;
+	}
 	
 }

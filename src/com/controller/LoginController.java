@@ -50,6 +50,7 @@ public class LoginController extends HttpServlet {
 				bo.getUser( user );
 				user.setPassword( null );
 				out.print(gson.toJson( user ) );
+				System.out.println( user );
 				if ( user.getType().equals( "EMPLOYEE" ) ) {
 					response.setStatus( 200 );				
 				}
@@ -60,12 +61,12 @@ public class LoginController extends HttpServlet {
 		        AccountBO accountBO = new AccountBOImpl();
 		        
 		        ArrayList < Account > accountList = accountBO.getAccountsByUsername( user.getUsername() );
-		     
+		        
 		        if ( accountList.size() == 0 && ! user.getType().equals( "EMPLOYEE" ) ) {
-		        	
+		        	System.out.println( "new user" );
 		        	response.setStatus( 204 );
 		        } else {
-		        
+		        	
 		        	response.setStatus( 200 );
 		        }
 			} else {

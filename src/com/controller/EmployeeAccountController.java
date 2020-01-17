@@ -12,6 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import com.bo.UserBO;
 import com.bo.impl.UserBOImpl;
+import com.to.User;
+
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class EmployeeAccountController
@@ -32,6 +35,8 @@ public class EmployeeAccountController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		Logger log = Logger.getLogger( EmployeeAccountController.class );
+		
 		try {
 			response.setContentType( "application/json" );
 			PrintWriter out=response.getWriter();
@@ -40,8 +45,13 @@ public class EmployeeAccountController extends HttpServlet {
 			 User user = new User();
 			 if ( session != null ) {
 				 String username = ( String )session.getAttribute( "username" );
-				 if ( userBO.getUser( ) )
-				 response.setStatus( 200 );
+//				 log.info( "Employee login attempted by user " + username );
+				 user.setUsername( username );
+				 if ( userBO.getUser( user ).getType().equals( "EMPLOYEE" ) ) {
+					 response.setStatus( 200 );
+				 } else {
+					 response.setStatus( 403 );
+				 }
 			 } else {
 				 response.setStatus( 403 );
 			 }

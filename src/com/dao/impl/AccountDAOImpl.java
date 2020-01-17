@@ -135,6 +135,56 @@ public class AccountDAOImpl implements AccountDAO {
 		return account;
 		
 	}
+
+	@Override
+	public ArrayList<Account> getPendingAccounts() throws BusinessException {
+		ArrayList < Account > accountList = new ArrayList();	
+		try(Connection connection=OracleConnection.getConnection()){
+			
+			String sql = "select username, accountnumber, balance, type, status from accounts where status=?";
+
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			
+			preparedStatement.setString( 1, "pending" );
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while ( resultSet.next() ) {
+				Account account = new Account();
+				account.setType( resultSet.getString( "type" ) );
+				account.setBalance( resultSet.getDouble(  "balance" ) );
+				account.setAccountNumber( resultSet.getInt( "accountnumber" ) );
+				account.setStatus( resultSet.getString( "status" ) );
+				account.setUsername( resultSet.getString( "username") );
+				accountList.add( account );
+			}
+			
+		} catch (ClassNotFoundException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		} catch (SQLException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		}
+		return accountList;
+	}
+
+	@Override
+	public int updateAccount( Account account ) throws BusinessException {
+		int i = 0;
+		try( Connection connection=OracleConnection.getConnection() ) {
+			String sql = "update accounts set status = ? where accountnumber=?";
+			PreparedStatement preparedStatement = connection.prepareStatement( sql );
+			preparedStatement.setString( 1, account.getStatus() );
+			preparedStatement.setInt( 2, account.getAccountNumber() );
+			
+			i =  preparedStatement.executeUpdate();
+		
+		} catch (ClassNotFoundException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		} catch (SQLException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		}
+		
+		return i;
+	}
 	
 
 

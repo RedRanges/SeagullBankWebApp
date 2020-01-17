@@ -61,10 +61,21 @@ public class AccountBOImpl implements AccountBO{
 		account = new AccountDAOImpl().getAccountByAccountNumber( accountNumber );
 		return account;
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public ArrayList<Account> getPendingAccounts() throws BusinessException {
+		ArrayList <Account> accountList = new ArrayList();
+		accountList = new AccountDAOImpl().getPendingAccounts();
+		return accountList;
+	}
+
+	@Override
+	public int updateAccount( Account account ) throws BusinessException {
+		// TODO Auto-generated method stub
+		int i = 0;
+		i = new AccountDAOImpl().updateAccount( account );
+		return i;
+	}
+
 
 }

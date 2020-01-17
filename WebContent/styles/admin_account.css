@@ -1,1 +1,25 @@
-@charset "ISO-8859-1";
+#navbarSeagull {
+    width : 40px;
+}
+
+a {
+    color : #222;
+}
+
+body {
+    background-color : #e5e5e5;
+}
+
+table {
+	display:block;
+	width : 100%;
+	margin : 0 auto;
+	text-align : center;
+	height : 45vh;
+	overflow : auto;
+}
+
+.logout-btn {
+    background: dodgerblue;
+    color : whitesmoke;
+}

@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+
+<title>Seagull Admin</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="styles/admin_account.css">
+  <link href="imgs/seagull-svgrepo-com-ico.ico" rel="icon"  type="image/x-icon" />
 </head>
 <body>
-	test
+	  <nav class="navbar navbar-expand-sm bg-light">
+    <a class="navbar-brand">
+      <img id="navbarSeagull" src="imgs/seagull-svgrepo-com.svg">
+    </a>
+    <button id="logoutButton" class="btn nav-link logout-btn ml-auto">
+      <a id="logoutButton" href="admin_login.html">Logout</a>
+    </button>
+  </nav>
+  	<div class="container-fluid">
+  	<div class="row justify-center">
+  	<div class="col-6">
+  	<div>transfers</div>
+  	<table id="transfer-table" class="table"></table>
+  	
+  	
+  
+  	</div>
+  	<div class="col-6">
+  	<div>transactions</div>
+  	<table id="transaction-table" class="table"></table>
+  	</div>
+  	</div>
+  	<div class="row">
+	<div class="col-6">
+	<div>pending accounts</div>
+	<table id="pending-accounts-table" class="table"></table>
+	</div>
+	<div class="col-6">
+	
+		<table id="get-user-info-table"></table>
+	</div>
+  	</div>
+  	</div>
+	
+	<script type="text/javascript" src="scripts/admin_account.js"></script>
 </body>
 </html>

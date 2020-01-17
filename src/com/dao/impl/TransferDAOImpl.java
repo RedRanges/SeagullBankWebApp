@@ -132,4 +132,36 @@ public class TransferDAOImpl implements TransferDAO{
 		
 		return transfer;
 	}
+
+	@Override
+	public ArrayList<Transfer> getAllTransfers() throws BusinessException {
+		ArrayList < Transfer > transferList = new ArrayList();
+		try( Connection connection=OracleConnection.getConnection() ) {
+			String sql = "select id, status, amount, datetime, accountfrom, accountto, responsedatetime from transfers";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement( sql );
+
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while ( resultSet.next() ) {
+				Transfer transfer = new Transfer();
+				transfer.setId( resultSet.getInt( "id" ) );
+				transfer.setStatus( resultSet.getString( "status" ) );
+				transfer.setAmount( resultSet.getDouble( "amount" ) );
+				transfer.setDateTime( resultSet.getString( "datetime" ) );
+				transfer.setAccountFrom( resultSet.getInt( "accountfrom" ) );
+				transfer.setAccountTo( resultSet.getInt( "accountTo" ) );
+				transfer.setResponseDateTime( resultSet.getString( "responsedatetime" ) );
+				
+				transferList.add( transfer );
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		} catch (SQLException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		}
+		
+		return transferList;
+	}
 }
