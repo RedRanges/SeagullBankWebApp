@@ -32,7 +32,9 @@ public class AccountBOImpl implements AccountBO{
 	public int setBalance( Account account, String type, double amount ) throws BusinessException {
 		int i = 0;
 		Account updatedAccount = new Account();
-		
+		if ( amount < 0 ) {
+			throw new BusinessException( "no negative numbers" );
+		}
 		if ( type.equals( "withdraw" ) && account.getBalance() - amount >= 0 ) {
 			updatedAccount.setBalance( account.getBalance() - amount );
 			updatedAccount.setAccountNumber( account.getAccountNumber() );

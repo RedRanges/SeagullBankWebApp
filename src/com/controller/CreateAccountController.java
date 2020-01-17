@@ -50,7 +50,7 @@ public class CreateAccountController extends HttpServlet {
 		if ( session != null ) {
 			account.setUsername( (String) session.getAttribute( "username" ) );
 			try {
-				System.out.println( account );
+				
 			accountBO.addAccount( account );
 			response.setStatus( 200 );
 			} catch ( BusinessException e ) {

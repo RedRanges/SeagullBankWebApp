@@ -13,13 +13,18 @@
 function makeBalanceArray ( arr ) {
 	let dateSortedArray = arr.sort( ( a, b ) => { 
 	    return new Date ( a.dateTime ) - new Date ( b.dateTime  ) } );
+	let dateArray = dateSortedArray.map( e => e.dateTime );
+	let unixTimeArr = scaleDates( dateArray );
 
+		
 	document.getElementById('selected-account').innerHTML = dateSortedArray[ 0 ].accountNumber;
 	let balanceHistory = dateSortedArray.map( e => {  return e.balance } );
 	let balanceMin = Math.min( ...balanceHistory );
 	let balanceMax = Math.max( ...balanceHistory );
 	let scaledArray = balanceHistory.scaleBetween( 400, 0 );
 	let svg = document.getElementById("my-svg");
+	unixTimeArr = unixTimeArr.scaleBetween( 50, svg.width.baseVal.value-30 );
+
 	
 	destroyNodeChildren( svg );
 	let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
@@ -43,11 +48,11 @@ function makeBalanceArray ( arr ) {
 	minNumber.setAttributeNS(null,"font-size","12");
 	minNumber.innerHTML = balanceMin;
 	svg.appendChild( minNumber );
-	let x  = 50;
-
-	scaledArray.forEach( ( element ) => {
-	   points += `${ x }, ${ element + 10 } `;
-	   x += 20;
+	
+	
+	
+	scaledArray.forEach( ( element, index ) => {
+	   points += `${ unixTimeArr[ index ] }, ${ element + 10 } `;
 	} );
 
 	polyline.setAttributeNS( null, "points", points );
@@ -199,6 +204,8 @@ function getAccountData() {
 		  
 	  let submitButton = document.getElementById( 'submit-btn' );
   	  submitButton.addEventListener( 'click', function () {
+  		let depositFeedback = document.getElementById('deposit-feedback');
+  		depositFeedback.innerHTML = "";
   		  let submitTransactionXhr = new XMLHttpRequest;
   		  
   		  let transactionSubmission = { 'type' : 'deposit', 
@@ -209,6 +216,7 @@ function getAccountData() {
   		  submitTransactionXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/add_transaction', true );
   		  submitTransactionXhr.onload = function () {
 			if ( this.readyState == 4 ) {
+			
 				if ( this.status === 200 ) {
 					let response = submitTransactionXhr.response;
 //					console.log( 'response : ', response );
@@ -216,10 +224,21 @@ function getAccountData() {
 					updateAccounts();
 //					console.log( formContainer );
 					destroyNodeChildren( formContainer );
+					formContainer.innerHTML = `<div id="success-feedback" class="my-2">Sucessful deposit</div>`
+					let successFeedback = document.getElementById('success-feedback');
+					successFeedback.style.color="#20dd00";
 
+				} else {
+					if ( this.status == 404 ) {
+						
+						depositFeedback.innerHTML += "*invalid deposit";
+						depositFeedback.style.color = 'red';
+						
+					}
 				}
 			} else {
-				console.log( 'couldn\'t make transaction' );
+				
+				
 			}
 			
   		  }
@@ -265,8 +284,14 @@ function getAccountData() {
 					updateLineGraph();
 					updateAccounts();
 					destroyNodeChildren( formContainer );
-					
-
+					formContainer.innerHTML = `<div id="success-feedback" class="my-2">Sucessful withdraw</div>`
+					let successFeedback = document.getElementById('success-feedback');
+					successFeedback.style.color="#20dd00";
+				
+				} else {
+					let withdrawFeedback = document.getElementById( 'withdraw-feedback' );
+					withdrawFeedback.innerHTML = 'invalid withdraw';
+					withdrawFeedback.style.color = 'red';
 				}
 			} else {
 				console.log( 'couldn\'t make transaction' );
@@ -319,7 +344,7 @@ function getAccountData() {
 			if ( this.readyState == 4 ) {
 				if ( this.status === 200 ) {
 					let response = submitTransferXhr.response;
-					console.log( 'response : ', response );
+//					console.log( 'response : ', response );
 					updateLineGraph();
 					updateAccounts();
 					destroyNodeChildren( formContainer );
@@ -601,6 +626,8 @@ applyMenuButton.addEventListener( 'click', function() {
 	  	refreshAccountsXhr.onload = function () {
 			if ( this.readyState == 4 ) {
 				if ( this.status === 200 ) {
+					let formContainer = document.getElementById( 'form-container' );
+					
 					let response = refreshAccountsXhr.response;
 
 					if ( response.length > 2 ) {
@@ -612,7 +639,7 @@ applyMenuButton.addEventListener( 'click', function() {
 						navCards.forEach( ( element, index ) => { 
 							element.innerHTML = `${arr[index].type} Account : ${arr[index].accountNumber}`
 							cardText[ index ].innerHTML = `Balance : $${arr[index].balance}`
-						} );
+				} );
 											
 					} else {
 						displayNoHistory();
@@ -627,6 +654,16 @@ applyMenuButton.addEventListener( 'click', function() {
 	  	refreshAccountsXhr.send();
   }
   
+
+function scaleDates( arr ) {	
+	let tsArr = [];
+	for ( let i = 0; i < arr.length; i++ ) {
+		let ts = new Date( arr[i] ).getTime() / 1000;
+		tsArr.push( ts );
+	}
+	return tsArr;
+
+};
   
   
 

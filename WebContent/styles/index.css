@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+
+body {
+	background-color : whitesmoke;
+	background-image: url(../imgs/2758008.svg);
+}
+
+#navbarSeagull {
+    width : 40px;
+}
+
+a {
+    color : #222;
+}
+
+.login-btn {
+    background-color: #e5e5e5;
+}
+
+.register-btn {
+    background-color : #e5e5e5;
+    /* color : whitesmoke; */
+}

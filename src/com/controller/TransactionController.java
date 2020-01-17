@@ -70,6 +70,7 @@ public class TransactionController extends HttpServlet {
 
 				
 				try {
+					System.out.println( transaction );
 					// update the account in the database, but we probably need to fetch that account now to update the view
 					accountBO.setBalance( transactionAccount, transaction.getType(), transaction.getAmount() );
 					System.out.println( accountBO.getAccountByAccountNumber( transactionAccount.getAccountNumber() ) );
@@ -80,13 +81,19 @@ public class TransactionController extends HttpServlet {
 					// change method name to add transaction?
 					transactionBO.makeTransaction( transaction );
 				} catch ( BusinessException e ) {
-					out.print( e.getMessage() );
+					System.out.println( e.getMessage() );
+//					out.print( e.getMessage() );
+					response.setStatus( 404 );
+					return;
 				}
 			} catch ( BusinessException e ) {
 				// what is this businessException
+				System.out.println( e.getMessage() );
+				response.setStatus( 404 );
 			}				
 			response.setStatus( 200 );
 		} else {
+			
 			// what status do I want to send back when things go wrong
 			response.setStatus( 403 );
 		}

@@ -21,6 +21,10 @@ input {
     margin-top: 10px;
 }
 
+.login-btn {
+	background-color : #e5e5e5;
+}
+
 a {
     color : #222;
 }
