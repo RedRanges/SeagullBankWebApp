@@ -103,6 +103,26 @@
   <servlet-mapping>  
     <servlet-name>AllAccountTransfersController</servlet-name>  
     <url-pattern>/all_account_transfers</url-pattern>
-  </servlet-mapping>         
+  </servlet-mapping>
+          <servlet>  
+    <description></description>  
+    <display-name>RefreshNavBalances</display-name>  
+    <servlet-name>RefreshNavBalances</servlet-name>  
+    <servlet-class>com.controller.RefreshNavBalances</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>RefreshNavBalances</servlet-name>  
+    <url-pattern>/refresh_nav</url-pattern>
+  </servlet-mapping> 
+            <servlet>  
+    <description></description>  
+    <display-name>RegisterAccountController</display-name>  
+    <servlet-name>RegisterAccountController</servlet-name>  
+    <servlet-class>com.controller.RegisterAccountController</servlet-class>  
+  </servlet>
+  <servlet-mapping>  
+    <servlet-name>RegisterAccountController</servlet-name>  
+    <url-pattern>/register_account</url-pattern>
+  </servlet-mapping>          
 
 </web-app>

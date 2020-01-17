@@ -211,7 +211,8 @@ function getAccountData() {
 					let response = submitTransactionXhr.response;
 					console.log( 'response : ', response );
 					updateLineGraph();
-					console.log( formContainer );
+					updateAccounts();
+//					console.log( formContainer );
 					destroyNodeChildren( formContainer );
 
 				}
@@ -260,7 +261,9 @@ function getAccountData() {
 					console.log( 'response : ', response );
 					
 					updateLineGraph();
-					destroyNodeChild( formContainer );
+					updateAccounts();
+					destroyNodeChildren( formContainer );
+					
 
 				}
 			} else {
@@ -316,6 +319,7 @@ function getAccountData() {
 					let response = submitTransferXhr.response;
 					console.log( 'response : ', response );
 					updateLineGraph();
+					updateAccounts();
 					destroyNodeChildren( formContainer );
 				}
 			} else {
@@ -385,12 +389,13 @@ function getAccountData() {
 						let pendingTransferRows = document.querySelectorAll( '#pending-transfer-row' );
 					
 						pendingTransferRows.forEach( ( row ) => {
-							row.addEventListener( 'click', function(){
+							row.addEventListener( 'click', function createTransferOptions(){
 								pendingTransferRows.forEach( row => row.style.color='black' );
 								this.style.color = 'dodgerblue';
 								let pendingTransferOptions = document.getElementById( 'pending-transfer-options' );
 								destroyNodeChildren( pendingTransferOptions );
 								let selectedTransferId = this.firstChild.nextSibling.innerHTML;
+								let currentStatus = this.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling;
 								pendingTransferOptions.innerHTML = 
 								`
 								<div><h5>Please select an option : </h5></div>
@@ -406,21 +411,36 @@ function getAccountData() {
 								rejectButton.className = "btn transaction-btn mx-2 transfer-response-btn";
 								pendingTransferOptions.append( rejectButton );
 								
+								let transferMessageResponse = document.createElement( 'div' );
+								transferMessageResponse.id = 'transfer-message-response';
+								transferMessageResponse.className = 'transfer-message-response pt-2';
+								pendingTransferOptions.append( transferMessageResponse );
+								
 								let transferResponseButtons = document.querySelectorAll( '.transfer-response-btn' );
 //								console.log( transferResponseButtons );
 								transferResponseButtons.forEach( ( button ) => {
-									button.addEventListener( 'click', function() {
+									button.addEventListener( 'click', function  sendTransferResponse () {
 										let transferResponseXhr = new XMLHttpRequest;
 										
 										let transferResponse = { 'id' : selectedTransferId, 
-																'status' : button.innerHTML === 'Accept' ? 'accepted' : 'rejected' }
+																'status' : button.innerHTML === 'Accept' ? 'accepted' : 'rejected',
+																'responseDateTime' : new Date() };
 										transferResponse = JSON.stringify( transferResponse );
 										transferResponseXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/response_transfer', true );
 										transferResponseXhr.onload = function () {
 											if ( this.readyState == 4 ) {
 												if ( this.status === 200 ) {
-													let response = transferResponseXhr.response;
-													console.log( 'response : ', response );
+													row.removeEventListener( 'click', createTransferOptions )
+//													let response = transferResponseXhr.response;
+													transferResponseButtons.forEach( ( e ) => {
+														console.log( 'two' );
+														e.removeEventListener( 'click', sendTransferResponse );
+													} );
+												
+													transferMessageResponse.innerHTML = 'Transfer ' + button.innerHTML.toLowerCase() + 'ed' ;
+													currentStatus.innerText = button.innerHTML.toLowerCase() + 'ed';
+													updateLineGraph();
+											
 													
 //												updateLineGraph();
 //												destroyNodeChildren( formContainer );
@@ -433,10 +453,7 @@ function getAccountData() {
 										
 									} );
 								} );
-								
-								
-								
-								
+							
 							} );
 
 			
@@ -461,10 +478,7 @@ function getAccountData() {
 			} else {
 				// what goes here?
 				console.log( 'couldn\'t make transfer' );
-			}
-			
-
-		
+			}		
 		}
 		getAllAccountNumberTransfersXhr.send( accountSubmission );
 		
@@ -486,8 +500,7 @@ function getAccountData() {
 				if ( this.status === 200 ) {
 					let response = selectedAccountXhr.response;
 					let arr = parseResponseToJsonArray( response );
-					makeBalanceArray( arr );
-					// make balance array for line chart
+
 				}
 			} else {
 				console.log( 'couldn\'t select an account' );
@@ -496,6 +509,7 @@ function getAccountData() {
 		}
 		
 		selectedAccountXhr.send( selectedAccountNumber );
+		
 	  
   };
   
@@ -513,13 +527,46 @@ function getAccountData() {
 	  
  }
   
+
+  function updateAccounts() {
+	  let refreshAccountsXhr = new XMLHttpRequest;
+
+		
+	  	refreshAccountsXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/refresh_nav', true );
+
+		
+	  	refreshAccountsXhr.onload = function () {
+			if ( this.readyState == 4 ) {
+				if ( this.status === 200 ) {
+					let response = refreshAccountsXhr.response;
+
+					if ( response.length > 2 ) {
+						let arr = parseResponseToJsonArray( response );
+						let navCards = document.querySelectorAll( '#nav-account-info' );
+						let cardText = document.querySelectorAll( '.card-text' );
+
+						
+						navCards.forEach( ( element, index ) => { 
+							element.innerHTML = `${arr[index].type} Account : ${arr[index].accountNumber}`
+							cardText[ index ].innerHTML = `Balance : $${arr[index].balance}`
+						} );
+											
+					} else {
+						displayNoHistory();
+					}
+			
+				
+				} else {
+					console.log( 'couldn\'t select an account' );
+				}
+			}	
+		}	
+	  	refreshAccountsXhr.send();
+  }
   
   
   
-  
-  
-  
-  
+
 
   
   

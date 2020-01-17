@@ -48,7 +48,6 @@ public class AllAccountTransfersController extends HttpServlet {
 			TransferBO transferBO = new TransferBOImpl();
 			Gson gson = new Gson();
 			Account account = gson.fromJson( request.getReader(), Account.class );
-			System.out.println( account );
 			try {
 				ArrayList < Transfer > transferList = transferBO.getAllTransfersByAccountNumber( account );
 				out.print( gson.toJson( transferList ) );

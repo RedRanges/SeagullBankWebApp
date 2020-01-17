@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,28 +17,26 @@ import com.google.gson.Gson;
 import com.to.Account;
 
 /**
- * Servlet implementation class AccountNumberController
+ * Servlet implementation class RefreshNavBalances
  */
-@WebServlet("/AccountNumberController")
-public class AccountNumberController extends HttpServlet {
+
+public class RefreshNavBalances extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AccountNumberController() {
+    public RefreshNavBalances() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO 
-		// need try catch when getting accountList index 0 because list could be empty
+		
 		response.setContentType( "application/json" );
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
@@ -52,23 +49,17 @@ public class AccountNumberController extends HttpServlet {
 		
 		try {
 			accountList = bo.getAccountsByUsername( username );
-			int defaultSelectedAccount = accountList.get( 0 ).getAccountNumber();
-			session.setAttribute( "selectedAccount",  defaultSelectedAccount );
+			
 		} catch (BusinessException e) {
-			response.setStatus( 404 );
 			System.out.println( e.getMessage() );
+			response.setStatus( 404 );
 		}
 		
-
 		Gson gson = new Gson();
-		
-		
 		
 	
 		out.print( gson.toJson( accountList ) );
-		
-		
-		
+		response.setStatus( 200 );
 	}
 
 }

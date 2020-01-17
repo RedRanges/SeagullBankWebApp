@@ -113,8 +113,8 @@ public class AccountDAOImpl implements AccountDAO {
 		Account account = null;
 		try(Connection connection=OracleConnection.getConnection()){
 			
-			String sql = "select accountNumber, balance, type from accounts where accountnumber=?";
-
+			String sql = "select accountNumber, balance, username, type from accounts where accountnumber=?";
+			
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setInt( 1, accountNumber );
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -124,6 +124,7 @@ public class AccountDAOImpl implements AccountDAO {
 				account.setType( resultSet.getString( "type" ) );
 				account.setBalance( resultSet.getDouble(  "balance" ) );
 				account.setAccountNumber( resultSet.getInt( "accountnumber" ) );
+				account.setUsername( resultSet.getString( "username" ) );
 			}
 			
 		} catch (ClassNotFoundException e) {

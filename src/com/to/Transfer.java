@@ -7,6 +7,7 @@ public class Transfer {
 	private double amount;
 	private String dateTime;
 	private String status;
+	private String responseDateTime;
 	
 	@Override
 	public String toString() {
@@ -48,6 +49,12 @@ public class Transfer {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getResponseDateTime() {
+		return responseDateTime;
+	}
+	public void setResponseDateTime(String responseDateTime) {
+		this.responseDateTime = responseDateTime;
 	}
 
 

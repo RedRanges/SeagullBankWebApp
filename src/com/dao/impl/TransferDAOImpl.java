@@ -43,12 +43,13 @@ public class TransferDAOImpl implements TransferDAO{
 	public int updateTransfer( Transfer transfer ) throws BusinessException {
 		int i = 0;
 		try( Connection connection=OracleConnection.getConnection() ) {
-			String sql = "update transfers set status=? where id=?";
+			String sql = "update transfers set status=?, responsedatetime=? where id=?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 
 			preparedStatement.setString( 1, transfer.getStatus() );
-			preparedStatement.setInt( 2, transfer.getId() );
+			preparedStatement.setString( 2, transfer.getResponseDateTime() );
+			preparedStatement.setInt( 3, transfer.getId() );
 			
 			i =  preparedStatement.executeUpdate();
 
@@ -68,7 +69,7 @@ public class TransferDAOImpl implements TransferDAO{
 		ArrayList < Transfer > transferList = new ArrayList();
 		try( Connection connection=OracleConnection.getConnection() ) {
 //			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where accountfrom=? or accountto=?";
-			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where accountto=?";
+			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where accountto=? and status='pending'";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 
@@ -93,10 +94,42 @@ public class TransferDAOImpl implements TransferDAO{
 			throw new BusinessException( "Internal error occured... please contact support..." + e );
 		} catch (SQLException e) {
 			throw new BusinessException( "Internal error occured... please contact support..." + e );
-		
-
 		}
 		
 		return transferList;
+	}
+
+	@Override
+	public Transfer getTransferById(int id) throws BusinessException {
+		Transfer transfer = null;
+		try( Connection connection=OracleConnection.getConnection() ) {
+
+			String sql = "select id, status, amount, datetime, accountfrom, accountto from transfers where id=?";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement( sql );
+
+
+			preparedStatement.setInt( 1, id );
+
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if ( resultSet.next() ) {
+				transfer = new Transfer();
+				transfer.setId( resultSet.getInt( "id" ) );
+				transfer.setStatus( resultSet.getString( "status" ) );
+				transfer.setAmount( resultSet.getDouble( "amount" ) );
+				transfer.setDateTime( resultSet.getString( "datetime" ) );
+				transfer.setAccountFrom( resultSet.getInt( "accountfrom" ) );
+				transfer.setAccountTo( resultSet.getInt( "accountTo" ) );
+				
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		} catch (SQLException e) {
+			throw new BusinessException( "Internal error occured... please contact support..." + e );
+		}
+		
+		return transfer;
 	}
 }

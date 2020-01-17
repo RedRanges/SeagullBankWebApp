@@ -36,5 +36,14 @@ public class TransferBOImpl implements TransferBO {
 		
 		return transferList;
 	}
+
+	@Override
+	public Transfer getTransferById(int id) throws BusinessException {
+		Transfer transfer = null;
+		// TODO business logic
+		transfer = new TransferDAOImpl().getTransferById( id );
+		
+		return transfer;
+	}
 	
 }
