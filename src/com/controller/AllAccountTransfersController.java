@@ -51,9 +51,6 @@ public class AllAccountTransfersController extends HttpServlet {
 			System.out.println( account );
 			try {
 				ArrayList < Transfer > transferList = transferBO.getAllTransfersByAccountNumber( account );
-				for ( Transfer t : transferList ) {
-					System.out.println( t );
-				}
 				out.print( gson.toJson( transferList ) );
 				response.setStatus( 200 );
 			} catch (BusinessException e) {

@@ -186,7 +186,7 @@ function getAccountData() {
 	  	destroyNodeChildren( formContainer );
 	  
 		// make regex to test for format
-	  formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
+	  formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="25vh">
 		  <div mt-3 id="form-header"> Deposit into account : ${document.getElementById('selected-account').innerHTML}</div>
 		  <hr>
 		  <label class="pt-2">Amount : </label>
@@ -333,10 +333,19 @@ function getAccountData() {
 	  let formContainer = document.getElementById( 'form-container' );
 	  destroyNodeChildren( formContainer );
 
-    formContainer.innerHTML += `<div id="dynamic-form" width="100%" height="20vh">
-						  		<div mt-3 id="form-header"> Incoming Pending Transfers : ${document.getElementById('selected-account').innerHTML}</div>
-    							<table id="pending-transfer-table" class="table scrollbar overflow-auto"></table>
-    							<div id="pending-transfer-feedback" class="text-center mt-5"></div>
+    formContainer.innerHTML += `<div id="dynamic-form row" width="100%" height="30vh">
+    							<div class="row">
+						  		<div mt-3 id="form-header col-12">
+						  		<h5>
+						  		 Incoming Pending Transfers : ${document.getElementById('selected-account').innerHTML}
+						  		 </h5>
+						  		 </div>
+    							</div>
+    							<div class="row">
+    							<table id="pending-transfer-table" class="table scrollbar table-hover col-9"></table>
+    							<div id="pending-transfer-options" class="text-center mt-5 col-3"></div>
+    							</div>
+    							
 								</div>`
 
   		let getAllAccountNumberTransfersXhr = new XMLHttpRequest;
@@ -361,31 +370,104 @@ function getAccountData() {
 						</tr>
 						</thead>`;
 						pendingTransferArray.forEach( ( element ) => {
-							console.log( element );
+//							console.log( element );
+							
 							pendingTransferTable.innerHTML += 
-							`
-							<tr>
-							    <td>${element.id}</td><td>${element.accountFrom}</td>
+							`	
+							 <tr id="pending-transfer-row">
+							    <td id="transfer-id">${element.id}</td><td>${element.accountFrom}</td>
 							    <td>${element.dateTime}</td><td>$${element.amount}</td>
 							    <td>${element.status}</td>
 							 </tr>
 							`;
 						} );
 						
-					} else {
-						let pendingTransferFeedback = document.getElementById( 'pending-transfer-feedback' );
-						pendingTransferFeedback.innerHTML = "No pending transfers";
-					}
+						let pendingTransferRows = document.querySelectorAll( '#pending-transfer-row' );
 					
+						pendingTransferRows.forEach( ( row ) => {
+							row.addEventListener( 'click', function(){
+								pendingTransferRows.forEach( row => row.style.color='black' );
+								this.style.color = 'dodgerblue';
+								let pendingTransferOptions = document.getElementById( 'pending-transfer-options' );
+								destroyNodeChildren( pendingTransferOptions );
+								let selectedTransferId = this.firstChild.nextSibling.innerHTML;
+								pendingTransferOptions.innerHTML = 
+								`
+								<div><h5>Please select an option : </h5></div>
+								`
+								let acceptButton = document.createElement( 'button' );
+								acceptButton.innerHTML = 'Accept';
+								acceptButton.className = "btn transaction-btn mx-2 transfer-response-btn";
+								pendingTransferOptions.append( acceptButton );
+								
+								
+								let rejectButton = document.createElement( 'button' );
+								rejectButton.innerHTML = "Reject";
+								rejectButton.className = "btn transaction-btn mx-2 transfer-response-btn";
+								pendingTransferOptions.append( rejectButton );
+								
+								let transferResponseButtons = document.querySelectorAll( '.transfer-response-btn' );
+//								console.log( transferResponseButtons );
+								transferResponseButtons.forEach( ( button ) => {
+									button.addEventListener( 'click', function() {
+										let transferResponseXhr = new XMLHttpRequest;
+										
+										let transferResponse = { 'id' : selectedTransferId, 
+																'status' : button.innerHTML === 'Accept' ? 'accepted' : 'rejected' }
+										transferResponse = JSON.stringify( transferResponse );
+										transferResponseXhr.open( 'POST', 'http://localhost:5678/SeagullBankWebApp/response_transfer', true );
+										transferResponseXhr.onload = function () {
+											if ( this.readyState == 4 ) {
+												if ( this.status === 200 ) {
+													let response = transferResponseXhr.response;
+													console.log( 'response : ', response );
+													
+//												updateLineGraph();
+//												destroyNodeChildren( formContainer );
+												}
+											} else {
+												console.log( 'couldn\'t make transfer' );
+											}
+										}
+										transferResponseXhr.send( transferResponse );
+										
+									} );
+								} );
+								
+								
+								
+								
+							} );
 
+			
+						} );
+						
+											
+					} else {
+						
+						destroyNodeChildren( formContainer );
+						formContainer.innerHTML = 
+								`    							
+								<div class="row">
+						  		<div mt-3 class="col-12 text-center" id="form-header">
+						  		<h5>
+						  		 Account ${document.getElementById('selected-account').innerHTML} has no pending transfers.
+						  		 </h5>
+						  		 </div>
+    							</div>
+								`
+					}
 				}
 			} else {
+				// what goes here?
 				console.log( 'couldn\'t make transfer' );
 			}
+			
+
 		
 		}
 		getAllAccountNumberTransfersXhr.send( accountSubmission );
-	
+		
   } );
   
   
