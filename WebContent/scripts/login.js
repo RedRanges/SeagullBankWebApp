@@ -46,14 +46,24 @@ function submitLogin() {
 			loginXhr.open( "POST", "http://localhost:5678/SeagullBankWebApp/login", true );
 			loginXhr.onload = function () {
 				  if (this.readyState == 4) {
-				    if (this.status == 200) {
-				      console.log( loginXhr.response );
-				      window.location.href = ( 'account.html' )
+					  console.log( this.status );
+					 if (this.status == 200) {
+				    
+			      
+			      let response = JSON.parse( loginXhr.response );
+			      if ( response.type === 'EMPLOYEE' ) {
+			    	  window.location.href = ( 'admin_account.html' );
+				      
+				   } else if ( response.type === 'CUSTOMER' ) {
+					 window.location.href = ( 'account.html' );
+				   } else if( this.status == 204 ) {
+				    	window.location.href = ( 'new_user.html' );
 				  } else {
-					  console.log( 'not a sucess' );
+					  console.log( 'not a success' );
 				  }
-				}
 			}
+		}
+	}
 					
 	    loginXhr.send( loginSubmission ); 
 	} else {
@@ -61,6 +71,7 @@ function submitLogin() {
 		formFeedback.innerHTML = '*Invalid username or password';
 		formFeedback.style.color = 'red';
 	}
+				  
 };
 
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Admin Login</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type ="text/css" href="styles/admin_login.css">
+  <link href="imgs/seagull-svgrepo-com-ico.ico" rel="icon"  type="image/x-icon" />
+
+</head>
+<body>
+	        <nav class="navbar navbar-expand-sm bg-light">
+            <ul class="navbar-nav">
+                <li class="nav-item ml-auto">
+                    <a class="navbar-brand">
+                        <img id="navbarSeagull" src="imgs/seagull-svgrepo-com.svg"> 
+                    </a>
+                </li>              
+            </ul>          
+          </nav>
+		<div class="container col-4">
+           <div class="formTitle">
+              <h1 class="display-4">Login</h1>
+              <p>Please enter your login credentials</p>
+            </div>
+           <label>
+               Username
+           </label>
+           <input type="text" placeholder="Username" name="username" class="form-control" required id="inputUsername">
+           
+           <label>
+               Password
+           </label>
+           <input type="password" placeholder="Enter Password" name="password" class="form-control" required id="inputPassword">
+			<div id="formFeedback"><br></div>
+
+           <button id="loginButton" class="btn login-btn submit-login">Login</button>
+       </div>
+	</div>
+	<script type="text/javascript" src="scripts/login.js"></script>
+</body>
+</html>

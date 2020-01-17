@@ -1,0 +1,43 @@
+body {
+    background-color : whitesmoke;
+}
+
+input {
+    width : 50vw;
+}
+
+#loginButton {
+    width : 100%;
+    height : 8%;
+    margin-top : 10px;
+    margin-bottom: 30px;
+}
+
+#navbarSeagull {
+    width : 40px;
+}
+
+a {
+    color : #222;
+}
+
+.login-btn {
+    background-color: dodgerblue;
+}
+
+#new-header {
+	font-size : 300%;
+}
+
+#account-question {
+	font-size : 140%;
+}
+
+#apply-submission {
+	background-color : dodgerblue;
+	
+}
+
+#application-message {
+
+}

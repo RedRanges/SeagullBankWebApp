@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Register</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type ="text/css" href="styles/register.css">
+        <link href="imgs/seagull-svgrepo-com-ico.ico" rel="icon"  type="image/x-icon" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm bg-light">
+          <ul class="navbar-nav">
+            <li class="nav-item ml-auto">
+              <a class="navbar-brand">
+                <img id="navbarSeagull" src="imgs/seagull-svgrepo-com.svg"> 
+              </a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li>
+              <button class="btn nav-item ml-auto login-btn">
+                <a class="nav-link" href="login.html">Login</a>
+              </button>
+            </li>
+            <li>
+              <button class="btn nav-item ml-auto register-btn">
+                <a class="nav-link active">Register</a>
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+       <div class="container col-sm-9 col-md-3 col-lg-3 text-center pt-4">
+           <img id="registerSeagull" class="col-md-4 col-lg-4" src="imgs/seagull-svgrepo-com.svg"> 
+           <div class="formTitle row justify-center">
+                <h1 class="display-3 col-sm-9 col-md-3 col-lg-3 text-center">Account Registration</h1>
+                <p>Please provide the following information to register for an account</p>
+            </div>
+           <label>
+               Email
+           </label>
+           <input type="text" placeholder="Email Address" name="email" class="form-control" required id="inputEmail">
+           <div class="formFedback" id="emailFeedback"></div>
+           <label>
+               Username
+           </label>
+           <div id="usernameRequirements"></div>
+           
+           <input type="text" placeholder="Username" name="username" class="form-control" required id="inputUsername">
+           <div class="formFedback" id="usernameFeedback"></div>
+           
+           <label>
+               Password
+           </label>
+           <div id="passwordRequirements"></div>
+           <input type="password" placeholder="Enter Password" name="password" class="form-control" required id="inputPassword">
+           <div class="formFedback" id="passwordFeedback"></div>
+           <label>
+               Verify Password
+           </label>
+           
+           <input type="password" placeholder="Enter Password" name="password" class="form-control"required id="inputVerifyPassword">
+           <div class="formFedback" id="verifyPasswordFeedback"></div>
+           <button id="registerButton" class="btn register-btn submit-register">Register</button>
+       </div>
+
+       <script type="text/javascript" src="scripts/register.js"></script>
+    </body>
+</html>

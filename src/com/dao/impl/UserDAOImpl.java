@@ -42,12 +42,12 @@ public class UserDAOImpl implements UserDAO {
 	public int addUser(User user) throws BusinessException {
 		int i = 0;
 		try(Connection connection=OracleConnection.getConnection()){
-			String sql = "insert into users (username, email, password, type) values (?,?,?,?)";
+			String sql = "insert into users (username, email, password ) values (?,?,?)";
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 			preparedStatement.setString( 1, user.getUsername() );
 			preparedStatement.setString( 2, user.getEmail() );
 			preparedStatement.setString( 3, user.getPassword() );
-			preparedStatement.setString( 4, user.getType() );
+			
 			
 			i = preparedStatement.executeUpdate();
 			
@@ -56,6 +56,25 @@ public class UserDAOImpl implements UserDAO {
 			throw new BusinessException("Server encountered internal error.. Please contact support....");
 		}
 		return i;
+	}
+
+	@Override
+	public User getUser( User user ) throws BusinessException {
+		try(Connection connection=OracleConnection.getConnection()){
+			String sql="select username, type, email from users where username=?";
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setString(1, user.getUsername());
+			ResultSet resultSet=preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				user.setType( resultSet.getString( "type" ) );
+				user.setEmail( resultSet.getString( "email" ) );
+			}else {
+				throw new BusinessException("Invalid Login Credentials");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("Server encountered internal error.. Please contact support....");
+		}
+		return user;
 	}
 	
 }

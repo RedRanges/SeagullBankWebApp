@@ -4,35 +4,30 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.bo.AccountBO;
-import com.bo.impl.AccountBOImpl;
+import com.bo.UserBO;
+import com.bo.impl.UserBOImpl;
 import com.exception.BusinessException;
 import com.google.gson.Gson;
-import com.to.Account;
-import com.to.Transfer;
+import com.to.User;
 
-/**
- * Servlet implementation class CreateAccountController
- */
 
-public class CreateAccountController extends HttpServlet {
+
+
+public class RegisterUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateAccountController() {
+    public RegisterUserController() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-    
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,23 +36,22 @@ public class CreateAccountController extends HttpServlet {
 		response.setContentType( "application/json" );
 		response.setCharacterEncoding( "UTF-8" );
 		PrintWriter out=response.getWriter();
-		HttpSession session=request.getSession( false );
 		Gson gson=new Gson();
 		
-		Account account = gson.fromJson( request.getReader(), Account.class );
-		AccountBO accountBO = new AccountBOImpl();
-		
-		if ( session != null ) {
-			account.setUsername( (String) session.getAttribute( "username" ) );
-			try {
-				System.out.println( account );
-			accountBO.addAccount( account );
+		User user = gson.fromJson( request.getReader(), User.class );
+		System.out.println( user );
+		UserBO userBO = new UserBOImpl();
+		try {
+			userBO.addUser( user );
 			response.setStatus( 200 );
-			} catch ( BusinessException e ) {
-				System.out.println( e.getMessage() );
-				response.setStatus( 404 );
-			}
+		} catch (BusinessException e) {
+			response.setStatus( 404 );
+			e.printStackTrace();
 		}
+		
+		
+		
+
 	}
 
 }

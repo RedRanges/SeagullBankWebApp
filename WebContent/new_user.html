@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Seagull Bank</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ <link rel="stylesheet" type ="text/css" href="styles/new_user.css">
+ <link href="imgs/seagull-svgrepo-com-ico.ico" rel="icon"  type="image/x-icon" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-light">
+            <ul class="navbar-nav">
+                <li class="nav-item ml-auto">
+                    <a class="navbar-brand">
+                        <img id="navbarSeagull" src="imgs/seagull-svgrepo-com.svg"> 
+                    </a>
+                </li>
+                
+            </ul>
+            <ul class="navbar-nav ml-auto">
+              <li>
+                  <button class="btn nav-item ml-auto login-btn">
+                    <a class="nav-link active">Login</a>
+                  </button>
+                </li>
+                <li>
+                  <button class="btn nav-item ml-auto register-btn">
+                    <a class="nav-link" href="login.html">Logout</a>
+                  </button>
+                </li>
+            </ul>
+          
+          </nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-9">
+				<div id="new-header">
+				New to Seagull Bank?
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="account-question" class="col-6">
+				Why not sign up for an account?
+			</div>
+		</div>
+		<div class="row">
+			<div clas="col-9">
+				<div id="form-container" class="col-12 form-container mt-2">
+					<div id="apply-account-form" class="row form-inline form-group pt-2 px-2" height="10vh">
+				  		<table class="mx-2 pt-2 px-2">
+				  		<tr>
+				  		<td>Apply for a new Seagull</td>
+				  		 <td>
+  							<div class="form-group mx-2">
+							<select id="account-selection" class="custom-select" required>
+							  <option value="">Open this select menu</option>
+							  <option value="checking">Checking</option>
+							  <option value="savings">Savings</option>
+							</select>
+					    </td>
+					    <td>account</td>
+					    <td>
+					    <button id="apply-submission" class="btn transaction-btn ml-4">Apply</button>
+					    </td>
+					    
+					    </tr>
+				  		</table>
+						  	</div>
+						</div>
+					</div>
+					</div>
+					<div class="row">
+						<div class="col-9">
+							<div id="application-message"><br></div>
+						</div>
+					</div>
+			<div>
+<!-- 			<div class="row">
+				<div class="col-9">
+					<div class="display-4">
+						Already applied?
+					</div>
+				</div>
+			</div> -->
+				
+			</div>
+	<script type="text/javascript" src="scripts/new_user.js"></script>
+</body>
+</html>

@@ -30,5 +30,13 @@ public class UserBOImpl implements UserBO{
 		}
 		return i;
 	}
+
+	@Override
+	public User getUser(User user) throws BusinessException {
+		// business logic
+		user = new UserDAOImpl().getUser( user );
+		
+		return user;
+	}
 }
 

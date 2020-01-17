@@ -116,13 +116,13 @@
   </servlet-mapping> 
             <servlet>  
     <description></description>  
-    <display-name>RegisterAccountController</display-name>  
-    <servlet-name>RegisterAccountController</servlet-name>  
-    <servlet-class>com.controller.RegisterAccountController</servlet-class>  
+    <display-name>RegisterUserController</display-name>  
+    <servlet-name>RegisterUserController</servlet-name>  
+    <servlet-class>com.controller.RegisterUserController</servlet-class>  
   </servlet>
   <servlet-mapping>  
-    <servlet-name>RegisterAccountController</servlet-name>  
-    <url-pattern>/register_account</url-pattern>
+    <servlet-name>RegisterUserController</servlet-name>  
+    <url-pattern>/register_user</url-pattern>
   </servlet-mapping>          
 
 </web-app>

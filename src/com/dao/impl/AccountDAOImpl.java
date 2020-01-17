@@ -22,7 +22,7 @@ public class AccountDAOImpl implements AccountDAO {
 
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setString( 1, username );
-			preparedStatement.setString( 2, "APPROVED" );
+			preparedStatement.setString( 2, "approved" );
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while ( resultSet.next() ) {
@@ -46,11 +46,11 @@ public class AccountDAOImpl implements AccountDAO {
 	public int addAccount( Account account ) throws BusinessException {
 		int i = 0;
 		try( Connection connection=OracleConnection.getConnection() ) {
-			String sql = "insert into accounts (username, balance, type) values(?,?,?)";
+			String sql = "insert into accounts (username, status, type) values(?, ?, ?)";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement( sql );
 			preparedStatement.setString( 1, account.getUsername() );
-			preparedStatement.setDouble( 2,  account.getBalance() );
+			preparedStatement.setString( 2,  "pending" );
 			preparedStatement.setString( 3, account.getType() );
 			
 			i =  preparedStatement.executeUpdate();

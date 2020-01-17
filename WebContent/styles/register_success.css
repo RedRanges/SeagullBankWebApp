@@ -1,0 +1,13 @@
+body{
+	background-color : smokewhite;
+	background-image : url('../imgs/seagull_img1.jpg');
+}
+
+#navbarSeagull {
+    width : 40px;
+}
+
+
+#login-message {
+	font-size : 150%;
+}

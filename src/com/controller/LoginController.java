@@ -9,11 +9,15 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
+import com.bo.AccountBO;
 import com.bo.UserBO;
+import com.bo.impl.AccountBOImpl;
 import com.bo.impl.UserBOImpl;
 import com.exception.BusinessException;
 import com.google.gson.Gson;
+import com.to.Account;
 import com.to.User;
 
 /**
@@ -40,14 +44,30 @@ public class LoginController extends HttpServlet {
 		User user=gson.fromJson(request.getReader(), User.class);
 		UserBO bo=new UserBOImpl();
 		PrintWriter out=response.getWriter();
+	
 		try {
 			if( bo.isValidUser( user ) ) {
+				bo.getUser( user );
+				user.setPassword( null );
 				out.print(gson.toJson( user ) );
+				if ( user.getType().equals( "EMPLOYEE" ) ) {
+					response.setStatus( 200 );				
+				}
+
 		        HttpSession session=request.getSession();  
 		        session.setMaxInactiveInterval( 1200 );
 		        session.setAttribute( "username", user.getUsername() );
-
-		        response.setStatus( 200 );
+		        AccountBO accountBO = new AccountBOImpl();
+		        
+		        ArrayList < Account > accountList = accountBO.getAccountsByUsername( user.getUsername() );
+		     
+		        if ( accountList.size() == 0 && ! user.getType().equals( "EMPLOYEE" ) ) {
+		        	
+		        	response.setStatus( 204 );
+		        } else {
+		        
+		        	response.setStatus( 200 );
+		        }
 			} else {
 
 				response.setStatus( 403 );
